@@ -36,6 +36,18 @@ namespace CrudMetrics.Api.Preservers.MongoDb
             return user;
         }
 
+        public async Task<User> ReadUserAsync(Guid id)
+        {
+            var dbClient = new MongoClient(_mongoDbOptions.ConnectionString);
+            var database = dbClient.GetDatabase(_mongoDbOptions.DatabaseName);
+
+            var collection = database.GetCollection<User>("users");
+            var builder = Builders<User>.Filter;
+            var filter = builder.Eq(user => user.ExternalId, id);
+
+            return await collection.Find<User>(filter).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<User>> ReadUserAsync(String name)
         {
             var dbClient = new MongoClient(_mongoDbOptions.ConnectionString);

@@ -42,4 +42,23 @@ public class CrudController : BaseApiController
             return InternalServerError(ex);
         }
     }
+
+    [Route("users/{id:guid}"), HttpGet]
+    public async Task<IActionResult> ReadUserAsync(Guid id)
+    {
+        try
+        {
+            var user = await _preserver.ReadUserAsync(id);
+
+            if (user is null)
+                return NotFound("User not found.");
+
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error reading user.");
+            return InternalServerError(ex);
+        }
+    }
 }
