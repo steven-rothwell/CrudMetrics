@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"externalId\": null,\r\n    \"name\": \"New User\",\r\n    \"address\": {\r\n        \"street\": \"44 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 25,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
+					"raw": "{\r\n    \"externalId\": null,\r\n    \"name\": \"NewUser\",\r\n    \"address\": {\r\n        \"street\": \"44 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 25,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,7 +37,7 @@
 			"response": []
 		},
 		{
-			"name": "ReadUser",
+			"name": "ReadUser_Id",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true,
 				"strictSSL": false
@@ -69,6 +69,43 @@
 			"response": []
 		},
 		{
+			"name": "ReadUser_Name",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users?name=NewUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "NewUser"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "UpdateUser",
 			"protocolProfileBehavior": {
 				"strictSSL": false
@@ -78,7 +115,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"externalId\": \"f60c9e1e-f01a-4d6c-9c29-d680abb944f9\",\r\n    \"name\": \"New User\",\r\n    \"address\": {\r\n        \"street\": \"45 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 25,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
+					"raw": "{\r\n    \"externalId\": \"f60c9e1e-f01a-4d6c-9c29-d680abb944f9\",\r\n    \"name\": \"NewUser\",\r\n    \"address\": {\r\n        \"street\": \"45 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 25,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,7 +146,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"New New User\",\r\n    \"age\": 26\r\n}",
+					"raw": "{\r\n    \"name\": \"NewNewUser\",\r\n    \"age\": 26\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -148,14 +185,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/api/users/f60c9e1e-f01a-4d6c-9c29-d680abb944f9",
+					"raw": "{{base_url}}/api/users/c729e661-a6fb-43d1-9187-f5a349b587ed",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"users",
-						"f60c9e1e-f01a-4d6c-9c29-d680abb944f9"
+						"c729e661-a6fb-43d1-9187-f5a349b587ed"
 					]
 				}
 			},

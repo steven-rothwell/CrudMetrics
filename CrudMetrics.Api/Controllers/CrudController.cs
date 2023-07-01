@@ -62,6 +62,25 @@ public class CrudController : BaseApiController
         }
     }
 
+    [Route("users"), HttpGet]
+    public async Task<IActionResult> ReadUserAsync(String name)
+    {
+        try
+        {
+            var user = await _preserver.ReadUserAsync(name);
+
+            if (user is null)
+                return NotFound("User not found.");
+
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error reading user.");
+            return InternalServerError(ex);
+        }
+    }
+
     [Route("users/{id:guid}"), HttpPut]
     public async Task<IActionResult> UpdateUserAsync(Guid id, User user)
     {
