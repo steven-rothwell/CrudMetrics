@@ -63,7 +63,7 @@ public class CrudController : BaseApiController
     }
 
     [Route("users/{id:guid}"), HttpPut]
-    public async Task<IActionResult> UpdateAsync(Guid id, User user)
+    public async Task<IActionResult> UpdateUserAsync(Guid id, User user)
     {
         try
         {
@@ -81,6 +81,29 @@ public class CrudController : BaseApiController
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error updating user.");
+            return InternalServerError(ex);
+        }
+    }
+
+    [Route("users/{id:guid}"), HttpPatch]
+    public async Task<IActionResult> PartialUpdateUserAsync(Guid id, User user)
+    {
+        try
+        {
+            var validationResult = await _validator.ValidatePartialUpdateAsync(id, user);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Message);
+
+            var updatedModel = await _preserver.PartialUpdateAsync(id, user);
+
+            if (updatedModel is null)
+                return NotFound("User not found.");
+
+            return Ok(updatedModel);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error partially updating user.");
             return InternalServerError(ex);
         }
     }

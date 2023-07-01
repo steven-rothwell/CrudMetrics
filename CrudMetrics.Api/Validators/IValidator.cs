@@ -6,5 +6,6 @@ namespace CrudMetrics.Api.Validators
     {
         Task<ValidationResult> ValidateCreateAsync(User user);
         Task<ValidationResult> ValidateUpdateAsync(Guid id, User user);
+        Task<ValidationResult> ValidatePartialUpdateAsync(Guid id, User user);
     }
 }
