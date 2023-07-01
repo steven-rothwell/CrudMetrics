@@ -35,6 +35,69 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ReadUser_Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/f60c9e1e-f01a-4d6c-9c29-d680abb944f9",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"f60c9e1e-f01a-4d6c-9c29-d680abb944f9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"externalId\": \"f60c9e1e-f01a-4d6c-9c29-d680abb944f9\",\r\n    \"name\": \"New User\",\r\n    \"address\": {\r\n        \"street\": \"45 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 25,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/f60c9e1e-f01a-4d6c-9c29-d680abb944f9",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"f60c9e1e-f01a-4d6c-9c29-d680abb944f9"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

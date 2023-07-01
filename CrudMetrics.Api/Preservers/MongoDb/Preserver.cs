@@ -1,6 +1,7 @@
 using CrudMetrics.Api.Models;
 using CrudMetrics.Api.Options;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CrudMetrics.Api.Preservers.MongoDb
@@ -59,6 +60,21 @@ namespace CrudMetrics.Api.Preservers.MongoDb
 
             var models = await collection.FindAsync<User>(filter);
             return await models.ToListAsync();
+        }
+
+        public async Task<User> UpdateAsync(Guid id, User user)
+        {
+            var dbClient = new MongoClient(_mongoDbOptions.ConnectionString);
+            var database = dbClient.GetDatabase(_mongoDbOptions.DatabaseName);
+
+            var collection = database.GetCollection<User>("users");
+            var builder = Builders<User>.Filter;
+            var filter = builder.Eq(user => user.ExternalId, id);
+
+            return await collection.FindOneAndReplaceAsync<User>(filter, user, new FindOneAndReplaceOptions<User, User>
+            {
+                ReturnDocument = ReturnDocument.After
+            });
         }
     }
 }

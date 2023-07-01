@@ -38,7 +38,7 @@ public class CrudController : BaseApiController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error creating user.");
+            _logger.LogError(ex, "Error creating user.");
             return InternalServerError(ex);
         }
     }
@@ -57,7 +57,30 @@ public class CrudController : BaseApiController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error reading user.");
+            _logger.LogError(ex, "Error reading user.");
+            return InternalServerError(ex);
+        }
+    }
+
+    [Route("users/{id:guid}"), HttpPut]
+    public async Task<IActionResult> UpdateAsync(Guid id, User user)
+    {
+        try
+        {
+            var validationResult = await _validator.ValidateUpdateAsync(id, user);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Message);
+
+            var updatedModel = await _preserver.UpdateAsync(id, user);
+
+            if (updatedModel is null)
+                return NotFound("User not found.");
+
+            return Ok(updatedModel);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating user.");
             return InternalServerError(ex);
         }
     }
