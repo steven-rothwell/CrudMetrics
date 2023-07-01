@@ -129,6 +129,37 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/f60c9e1e-f01a-4d6c-9c29-d680abb944f9",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"f60c9e1e-f01a-4d6c-9c29-d680abb944f9"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

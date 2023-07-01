@@ -95,5 +95,18 @@ namespace CrudMetrics.Api.Preservers.MongoDb
                 ReturnDocument = ReturnDocument.After
             });
         }
+
+        public async Task<Int64> DeleteUserAsync(Guid id)
+        {
+            var dbClient = new MongoClient(_mongoDbOptions.ConnectionString);
+            var database = dbClient.GetDatabase(_mongoDbOptions.DatabaseName);
+
+            var collection = database.GetCollection<User>("users");
+            var builder = Builders<User>.Filter;
+            var filter = builder.Eq(user => user.ExternalId, id);
+
+            var deleteResult = await collection.DeleteOneAsync(filter);
+            return deleteResult.DeletedCount;
+        }
     }
 }

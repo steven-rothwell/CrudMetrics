@@ -107,4 +107,23 @@ public class CrudController : BaseApiController
             return InternalServerError(ex);
         }
     }
+
+    [Route("users/{id:guid}"), HttpDelete]
+    public async Task<IActionResult> DeleteUserAsync(Guid id)
+    {
+        try
+        {
+            var deletedCount = await _preserver.DeleteUserAsync(id);
+
+            if (deletedCount == 0)
+                return NotFound("User not found.");
+
+            return Ok(deletedCount);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error deleting user.");
+            return InternalServerError(ex);
+        }
+    }
 }
