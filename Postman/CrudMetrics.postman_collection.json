@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "bb651f8f-06b2-43f9-8522-100a7b838b97",
+		"name": "CrudMetrics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1338704"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"externalId\": null,\r\n    \"name\": \"New User\",\r\n    \"address\": {\r\n        \"street\": \"44 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 25,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
