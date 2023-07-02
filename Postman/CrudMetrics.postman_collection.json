@@ -137,7 +137,7 @@
 			"response": []
 		},
 		{
-			"name": "PartialUpdateUser",
+			"name": "PartialUpdateUser_Id",
 			"protocolProfileBehavior": {
 				"strictSSL": false
 			},
@@ -154,14 +154,50 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/api/users/f60c9e1e-f01a-4d6c-9c29-d680abb944f9",
+					"raw": "{{base_url}}/api/users/c729e661-a6fb-43d1-9187-f5a349b587ed",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"users",
-						"f60c9e1e-f01a-4d6c-9c29-d680abb944f9"
+						"c729e661-a6fb-43d1-9187-f5a349b587ed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PartialUpdateUser_Name",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NewUser\",\r\n    \"age\": 27\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users?name=NewNewUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "NewNewUser"
+						}
 					]
 				}
 			},

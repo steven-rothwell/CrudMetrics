@@ -96,6 +96,25 @@ namespace CrudMetrics.Api.Preservers.MongoDb
             });
         }
 
+        public async Task<User> PartialUpdateAsync(User user, String name)
+        {
+            var dbClient = new MongoClient(_mongoDbOptions.ConnectionString);
+            var database = dbClient.GetDatabase(_mongoDbOptions.DatabaseName);
+
+            var collection = database.GetCollection<User>("users");
+            var builder = Builders<User>.Filter;
+            var filter = builder.Eq(user => user.Name, name);
+            var updates = new List<UpdateDefinition<User>>();
+            updates.Add(Builders<User>.Update.Set(user => user.Name, user.Name));
+            updates.Add(Builders<User>.Update.Set(user => user.Age, user.Age));
+            var update = Builders<User>.Update.Combine(updates);
+
+            return await collection.FindOneAndUpdateAsync(filter, update, new FindOneAndUpdateOptions<User, User>
+            {
+                ReturnDocument = ReturnDocument.After
+            });
+        }
+
         public async Task<Int64> DeleteUserAsync(Guid id)
         {
             var dbClient = new MongoClient(_mongoDbOptions.ConnectionString);

@@ -9,6 +9,7 @@ namespace CrudMetrics.Api.Preservers
         Task<IEnumerable<User>> ReadUserAsync(String name);
         Task<User> UpdateAsync(Guid id, User user);
         Task<User> PartialUpdateAsync(Guid id, User user);
+        Task<User> PartialUpdateAsync(User user, String name);
         Task<Int64> DeleteUserAsync(Guid id);
     }
 }

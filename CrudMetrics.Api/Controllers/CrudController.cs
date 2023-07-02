@@ -109,11 +109,34 @@ public class CrudController : BaseApiController
     {
         try
         {
-            var validationResult = await _validator.ValidatePartialUpdateAsync(id, user);
+            var validationResult = await _validator.ValidatePartialUpdateAsync(user);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Message);
 
             var updatedModel = await _preserver.PartialUpdateAsync(id, user);
+
+            if (updatedModel is null)
+                return NotFound("User not found.");
+
+            return Ok(updatedModel);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error partially updating user.");
+            return InternalServerError(ex);
+        }
+    }
+
+    [Route("users"), HttpPatch]
+    public async Task<IActionResult> PartialUpdateUserAsync(User user, String name)
+    {
+        try
+        {
+            var validationResult = await _validator.ValidatePartialUpdateAsync(user);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Message);
+
+            var updatedModel = await _preserver.PartialUpdateAsync(user, name);
 
             if (updatedModel is null)
                 return NotFound("User not found.");

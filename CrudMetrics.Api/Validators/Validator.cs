@@ -61,7 +61,7 @@ namespace CrudMetrics.Api.Validators
             return Task.FromResult(new ValidationResult(true));
         }
 
-        public Task<ValidationResult> ValidatePartialUpdateAsync(Guid id, User user)
+        public Task<ValidationResult> ValidatePartialUpdateAsync(User user)
         {
             if (String.IsNullOrWhiteSpace(user.Name))
                 return Task.FromResult(new ValidationResult(false, $"{nameof(user.Name)} cannot be empty."));
