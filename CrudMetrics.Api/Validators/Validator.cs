@@ -27,7 +27,7 @@ namespace CrudMetrics.Api.Validators
             if (String.IsNullOrWhiteSpace(user.Name))
                 return new ValidationResult(false, $"{nameof(user.Name)} cannot be empty.");
 
-            var existingUsers = await _preserver.ReadUserAsync(user.Name);
+            var existingUsers = await _preserver.ReadUsersAsync(user.Name);
             if (existingUsers is not null && existingUsers.Any())
                 return new ValidationResult(false, $"A {nameof(User)} with the {nameof(user.Name)}: '{user.Name}' already exists.");
 

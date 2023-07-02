@@ -204,7 +204,7 @@
 			"response": []
 		},
 		{
-			"name": "DeleteUser",
+			"name": "DeleteUser_Id",
 			"protocolProfileBehavior": {
 				"strictSSL": false
 			},
@@ -229,6 +229,42 @@
 						"api",
 						"users",
 						"c729e661-a6fb-43d1-9187-f5a349b587ed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser_Name",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users?name=NewUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "NewUser"
+						}
 					]
 				}
 			},

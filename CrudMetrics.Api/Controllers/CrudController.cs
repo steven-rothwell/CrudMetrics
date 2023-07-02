@@ -63,11 +63,11 @@ public class CrudController : BaseApiController
     }
 
     [Route("users"), HttpGet]
-    public async Task<IActionResult> ReadUserAsync(String name)
+    public async Task<IActionResult> ReadUsersAsync(String name)
     {
         try
         {
-            var user = await _preserver.ReadUserAsync(name);
+            var user = await _preserver.ReadUsersAsync(name);
 
             if (user is null)
                 return NotFound("User not found.");
@@ -76,7 +76,7 @@ public class CrudController : BaseApiController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error reading user.");
+            _logger.LogError(ex, "Error reading users.");
             return InternalServerError(ex);
         }
     }
@@ -128,7 +128,7 @@ public class CrudController : BaseApiController
     }
 
     [Route("users"), HttpPatch]
-    public async Task<IActionResult> PartialUpdateUserAsync(User user, String name)
+    public async Task<IActionResult> PartialUpdateUsersAsync(User user, String name)
     {
         try
         {
@@ -136,16 +136,13 @@ public class CrudController : BaseApiController
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Message);
 
-            var updatedModel = await _preserver.PartialUpdateAsync(user, name);
+            var updatedCount = await _preserver.PartialUpdateAsync(user, name);
 
-            if (updatedModel is null)
-                return NotFound("User not found.");
-
-            return Ok(updatedModel);
+            return Ok(updatedCount);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error partially updating user.");
+            _logger.LogError(ex, "Error partially updating users.");
             return InternalServerError(ex);
         }
     }
@@ -165,6 +162,22 @@ public class CrudController : BaseApiController
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Error deleting user.");
+            return InternalServerError(ex);
+        }
+    }
+
+    [Route("users"), HttpDelete]
+    public async Task<IActionResult> DeleteUsersAsync(String name)
+    {
+        try
+        {
+            var deletedCount = await _preserver.DeleteUsersAsync(name);
+
+            return Ok(deletedCount);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error deleting users.");
             return InternalServerError(ex);
         }
     }
