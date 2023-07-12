@@ -1,0 +1,3 @@
+- dotnet publish -c Release -o ./bin/Publish
+- cd D:\GitLocal/CrudMetrics/bin/Publish
+- dotnet CrudMetrics.Api.dll --urls "https://localhost:7279"

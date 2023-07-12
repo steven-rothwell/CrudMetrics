@@ -86,7 +86,7 @@ namespace CrudMetrics.Api.Preservers.MongoDb
             var builder = Builders<User>.Filter;
             var filter = builder.Eq(user => user.ExternalId, id);
             var updates = new List<UpdateDefinition<User>>();
-            updates.Add(Builders<User>.Update.Set(user => user.Name, user.Name));
+            updates.Add(Builders<User>.Update.Set(user => user.HairColor, user.HairColor));
             updates.Add(Builders<User>.Update.Set(user => user.Age, user.Age));
             var update = Builders<User>.Update.Combine(updates);
 
@@ -105,7 +105,7 @@ namespace CrudMetrics.Api.Preservers.MongoDb
             var builder = Builders<User>.Filter;
             var filter = builder.Eq(user => user.Name, name);
             var updates = new List<UpdateDefinition<User>>();
-            updates.Add(Builders<User>.Update.Set(user => user.Name, user.Name));
+            updates.Add(Builders<User>.Update.Set(user => user.HairColor, user.HairColor));
             updates.Add(Builders<User>.Update.Set(user => user.Age, user.Age));
             var update = Builders<User>.Update.Combine(updates);
 

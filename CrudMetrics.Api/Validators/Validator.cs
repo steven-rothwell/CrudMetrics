@@ -63,8 +63,8 @@ namespace CrudMetrics.Api.Validators
 
         public Task<ValidationResult> ValidatePartialUpdateAsync(User user)
         {
-            if (String.IsNullOrWhiteSpace(user.Name))
-                return Task.FromResult(new ValidationResult(false, $"{nameof(user.Name)} cannot be empty."));
+            if (String.IsNullOrWhiteSpace(user.HairColor))
+                return Task.FromResult(new ValidationResult(false, $"{nameof(user.HairColor)} cannot be empty."));
 
             if (user.Age < 0)
                 return Task.FromResult(new ValidationResult(false, $"{nameof(user.Age)} cannot be less than zero."));
