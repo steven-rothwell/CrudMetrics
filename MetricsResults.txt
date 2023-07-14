@@ -1,0 +1,12 @@
+100 Iterations (no indexes)
+---------------------------
+Request				Avg Response Time
+--------------			-----------------
+CreateUser			4 ms
+ReadUser_Id			3 ms
+ReadUser_Name			3 ms
+UpdateUser_Id			3 ms
+PartialUpdateUser_Id		3 ms
+PartialUpdateUser_Name		3 ms
+DeleteUser_Id			3 ms
+DeleteUser_Name			3 ms

@@ -1,0 +1,457 @@
+{
+	"info": {
+		"_postman_id": "bb651f8f-06b2-43f9-8522-100a7b838b97",
+		"name": "CrudMetrics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1338704"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let iterations = JSON.parse(pm.environment.get(\"iterations\"));\r",
+							"let totalIterations = iterations.length;\r",
+							"pm.environment.set(\"current_iteration\", totalIterations);\r",
+							"iterations.push(totalIterations);\r",
+							"pm.environment.set(\"iterations\", JSON.stringify(iterations));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test ExternalId\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(\"Testing ExternalId: \" + jsonData.externalId);\r",
+							"    pm.expect(jsonData.externalId).not.null;\r",
+							"\r",
+							"    let externalIds = JSON.parse(pm.environment.get(\"external_ids\"));\r",
+							"    externalIds.push(jsonData.externalId);\r",
+							"    pm.environment.set(\"external_ids\", JSON.stringify(externalIds));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"externalId\": null,\r\n    \"name\": \"NewUser_{{current_iteration}}\",\r\n    \"address\": {\r\n        \"street\": \"44 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 25,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReadUser_Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let externalIds = JSON.parse(pm.environment.get(\"external_ids\"));\r",
+							"let index = pm.environment.get(\"current_read_external_id_index\");\r",
+							"if (index >= externalIds.length) index = 0;\r",
+							"let currentExternalId = externalIds[index];\r",
+							"pm.environment.set(\"current_external_id\", currentExternalId);\r",
+							"pm.environment.set(\"current_read_external_id_index\", ++index);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/{{current_external_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{current_external_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReadUser_Name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let iterations = JSON.parse(pm.environment.get(\"iterations\"));\r",
+							"let index = pm.environment.get(\"current_read_iteration_index\");\r",
+							"if (index >= iterations.length) index = 0;\r",
+							"let currentIternation = iterations[index];\r",
+							"pm.environment.set(\"current_iteration\", currentIternation);\r",
+							"pm.environment.set(\"current_read_iteration_index\", ++index);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users?name=NewUser_{{current_iteration}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "NewUser_{{current_iteration}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser_Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let iterations = JSON.parse(pm.environment.get(\"iterations\"));\r",
+							"let iterationIndex = pm.environment.get(\"current_update_iteration_index\");\r",
+							"if (iterationIndex >= iterations.length) iterationIndex = 0;\r",
+							"let currentIternation = iterations[iterationIndex];\r",
+							"pm.environment.set(\"current_iteration\", currentIternation);\r",
+							"pm.environment.set(\"current_update_iteration_index\", ++iterationIndex);\r",
+							"\r",
+							"let externalIds = JSON.parse(pm.environment.get(\"external_ids\"));\r",
+							"let externalIdsIndex = pm.environment.get(\"current_update_external_id_index\");\r",
+							"if (externalIdsIndex >= externalIds.length) externalIdsIndex = 0;\r",
+							"let currentExternalId = externalIds[externalIdsIndex];\r",
+							"pm.environment.set(\"current_external_id\", currentExternalId);\r",
+							"pm.environment.set(\"current_update_external_id_index\", ++externalIdsIndex);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"externalId\": \"{{current_external_id}}\",\r\n    \"name\": \"NewUser_{{current_iteration}}\",\r\n    \"address\": {\r\n        \"street\": \"46 Maple Street\",\r\n        \"city\": \"Pittsburgh\",\r\n        \"state\": \"PA\"\r\n    },\r\n    \"age\": 26,\r\n    \"hairColor\": \"brown\",\r\n    \"favoriteThings\": [\"Steelers\", \"Pirates\", \"Penguins\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/{{current_external_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{current_external_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PartialUpdateUser_Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let externalIds = JSON.parse(pm.environment.get(\"external_ids\"));\r",
+							"let index = pm.environment.get(\"current_partial_external_id_index\");\r",
+							"if (index >= externalIds.length) index = 0;\r",
+							"let currentExternalId = externalIds[index];\r",
+							"pm.environment.set(\"current_external_id\", currentExternalId);\r",
+							"pm.environment.set(\"current_partial_external_id_index\", ++index);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"age\": 27,\r\n    \"hairColor\": \"blonde\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/{{current_external_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{current_external_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PartialUpdateUser_Name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let iterations = JSON.parse(pm.environment.get(\"iterations\"));\r",
+							"let index = pm.environment.get(\"current_partial_iteration_index\");\r",
+							"if (index >= iterations.length) index = 0;\r",
+							"let currentIternation = iterations[index];\r",
+							"pm.environment.set(\"current_iteration\", currentIternation);\r",
+							"pm.environment.set(\"current_partial_iteration_index\", ++index);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"age\": 28,\r\n    \"hairColor\": \"red\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users?name=NewUser_{{current_iteration}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "NewUser_{{current_iteration}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser_Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function decrementAndSave(variableName) {\r",
+							"    let value = pm.environment.get(variableName);\r",
+							"    let integer = parseInt(value);\r",
+							"    if (integer !== 0) integer--;\r",
+							"    pm.environment.set(variableName, integer);\r",
+							"}\r",
+							"\r",
+							"let externalIds = JSON.parse(pm.environment.get(\"external_ids\"));\r",
+							"let currentExternalId = externalIds.shift();\r",
+							"pm.environment.set(\"current_external_id\", currentExternalId);\r",
+							"pm.environment.set(\"external_ids\", JSON.stringify(externalIds));\r",
+							"\r",
+							"let iterations = JSON.parse(pm.environment.get(\"iterations\"));\r",
+							"iterations.shift();\r",
+							"pm.environment.set(\"iterations\", JSON.stringify(iterations));\r",
+							"\r",
+							"decrementAndSave(\"current_read_iteration_index\");\r",
+							"decrementAndSave(\"current_update_iteration_index\");\r",
+							"decrementAndSave(\"current_partial_iteration_index\");\r",
+							"decrementAndSave(\"current_read_external_id_index\");\r",
+							"decrementAndSave(\"current_update_external_id_index\");\r",
+							"decrementAndSave(\"current_partial_external_id_index\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/{{current_external_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{current_external_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser_Name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function decrementAndSave(variableName) {\r",
+							"    let value = pm.environment.get(variableName);\r",
+							"    let integer = parseInt(value);\r",
+							"    if (integer !== 0) integer--;\r",
+							"    pm.environment.set(variableName, integer);\r",
+							"}\r",
+							"\r",
+							"let iterations = JSON.parse(pm.environment.get(\"iterations\"));\r",
+							"let currentIteration = iterations.shift();\r",
+							"pm.environment.set(\"current_iteration\", currentIteration);\r",
+							"pm.environment.set(\"iterations\", JSON.stringify(iterations));\r",
+							"\r",
+							"let externalIds = JSON.parse(pm.environment.get(\"external_ids\"));\r",
+							"externalIds.shift();\r",
+							"pm.environment.set(\"external_ids\", JSON.stringify(externalIds));\r",
+							"\r",
+							"decrementAndSave(\"current_read_iteration_index\");\r",
+							"decrementAndSave(\"current_update_iteration_index\");\r",
+							"decrementAndSave(\"current_partial_iteration_index\");\r",
+							"decrementAndSave(\"current_read_external_id_index\");\r",
+							"decrementAndSave(\"current_update_external_id_index\");\r",
+							"decrementAndSave(\"current_partial_external_id_index\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users?name=NewUser_{{current_iteration}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "NewUser_{{current_iteration}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
